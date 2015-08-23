@@ -29,8 +29,9 @@ var Player;
         game.add.existing(player);
 
 
-        player.scale.set( 0.5 );
         game.physics.p2.enable( player, true );
+        player.body.clearShapes();
+        player.body.loadPolygon('physicsData', 'player');
 
         player.body.fixedRotation = true;
         player.body.collideWorldBounds = true;
