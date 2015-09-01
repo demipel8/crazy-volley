@@ -8,7 +8,6 @@ en las invocaciones de los prefabs*/
 (function() {
     'use strict';
 
-    var materials = {};
     var teams = [];
     var LOSE_PERCENTAGE = 75 / 2;
     var ERASE_PERCENTAGE = 0.1;
@@ -22,21 +21,15 @@ en las invocaciones de los prefabs*/
 
             game.add.sprite( 0, 0, 'background' );
 
-            LAYERS.background = game.add.group();
-            LAYERS.foreground = game.add.group();
 
             this.physics.startSystem( Phaser.Physics.P2JS );
             this.physics.p2.gravity.y = 300;
 
-            var playerCollisionGroup = this.physics.p2.createCollisionGroup();
-            var ballCollisionGroup = this.physics.p2.createCollisionGroup();
-            game.physics.p2.updateBoundsCollisionGroup();
+            this.createLayers();
+            this.createCollisionGroups();
+            this.createMaterials();
 
-            this.createMaterials( game );
-
-            ball = Ball( game, 400, 50, 'ball', materials.ball );
-            ball.body.setCollisionGroup(ballCollisionGroup);
-            ball.body.collides([playerCollisionGroup, ballCollisionGroup]);
+            ball = Ball( game, 400, 50, 'ball' );
 
             var team1 = Team( game, 0, ( game.width / 2 ), {
                 color : '0xffff32',
@@ -45,11 +38,9 @@ en las invocaciones de los prefabs*/
                     right: Phaser.Keyboard.D,
                     jump: Phaser.Keyboard.W
                 }
-            }, materials.player, playerCollisionGroup, 'player0', 0 );
+            }, 'player0', 0 );
 
             player1 = team1.player;
-            player1.body.setCollisionGroup(playerCollisionGroup);
-            player1.body.collides([playerCollisionGroup, ballCollisionGroup]);
 
             var team2 = Team( game, ( game.width / 2 ), ( game.width / 2 ), {
                 color : '0x38eeff',
@@ -58,29 +49,41 @@ en las invocaciones de los prefabs*/
                     right: Phaser.Keyboard.RIGHT,
                     jump: Phaser.Keyboard.UP
                 }
-            }, materials.player, playerCollisionGroup, 'player1', 0 );
+            }, 'player1', 0 );
 
             player2 = team2.player;
-            player2.body.setCollisionGroup(playerCollisionGroup);
-            player2.body.collides([playerCollisionGroup, ballCollisionGroup]);
 
-            this.physics.p2.createContactMaterial( materials.ball, materials.player, { restitution: 1.2 } );
-            this.physics.p2.createContactMaterial( materials.ball, materials.world, { restitution: 0.8 } );
+            this.physics.p2.createContactMaterial( MATERIALS.ball, MATERIALS.player, { restitution: 1.2 } );
+            this.physics.p2.createContactMaterial( MATERIALS.ball, MATERIALS.world, { restitution: 0.8 } );
 
             ball.events.onTouchGround.add( this.ballTouchesGround , this );
             teams.push( team1, team2 );
 
-            var timer = CountDown( game, 265, 50, 3 );
+            var timer = CountDown( game, 265, 5, 3 );
             timer.start();
-            timer.events.onCountDownEnds.add( function() { console.log( 'se acabo' ) } , this );
+            timer.events.onCountDownEnds.add( function() { console.log( 'se acabo' ); } , this );
+
+            PowerUp( game, 0, 0, 'powerUp' );
         },
 
-        createMaterials: function( game ) {
-            materials.world = game.physics.p2.createMaterial('worldMaterial');
-            materials.player = game.physics.p2.createMaterial('playerMaterial');
-            materials.ball = game.physics.p2.createMaterial('ballMaterial');
+        createLayers: function( ) {
+            LAYERS.background = this.game.add.group();
+            LAYERS.foreground = this.game.add.group();
+        },
 
-            game.physics.p2.setWorldMaterial( materials.world );
+        createCollisionGroups: function() {
+            COLLISION_GROUPS.player = this.physics.p2.createCollisionGroup();
+            COLLISION_GROUPS.ball = this.physics.p2.createCollisionGroup();
+
+            this.physics.p2.updateBoundsCollisionGroup();
+        },
+
+        createMaterials: function() {
+            MATERIALS.world = this.game.physics.p2.createMaterial('worldMaterial');
+            MATERIALS.player = this.game.physics.p2.createMaterial('playerMaterial');
+            MATERIALS.ball = this.game.physics.p2.createMaterial('ballMaterial');
+
+            this.physics.p2.setWorldMaterial( MATERIALS.world );
         },
 
         ballTouchesGround: function( ball ) {
@@ -96,7 +99,6 @@ en las invocaciones de los prefabs*/
                             this.collapseOn2Teams( team, index, 0.1 );
                         } else {
                             this.collapseTeam( team, index, ERASE_PERCENTAGE );
-
                         }
 
                         if( team.score.getScore() < LOSE_PERCENTAGE ) {
