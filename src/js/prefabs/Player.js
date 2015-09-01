@@ -2,17 +2,18 @@
  * Created by demi on 8/27/15.
  */
 var Player;
-var cursors;
-var jumpTimer = 0;
-var sideSpeed = 200;
-var jumpSpeed = 200;
-var yAxis = p2.vec2.fromValues(0, 1);
 
 (function(  ) {
+
+    var sideSpeed = 200;
+    var jumpSpeed = 200;
+    var yAxis = p2.vec2.fromValues(0, 1);
+    var STATES = { LEFT: 0, RIGHT: 1 };
 
     Player = function (game, x, y, image, controls, material, collisionGroup, audio ) {
 
         var player = Object.create(Phaser.Sprite.prototype);
+        var currentStates = STATES.RIGHT;
         Phaser.Sprite.call(player, game, x, y, image, LAYERS.foreground );
 
         player.anchor.setTo(.5, 1);
@@ -38,16 +39,23 @@ var yAxis = p2.vec2.fromValues(0, 1);
             if ( game.input.keyboard.isDown( controls.left ) ) {
                 player.scale.x = -1;
                 player.body.moveLeft( sideSpeed );
-                player.body.clearShapes();
-                player.body.loadPolygon('physicsLeftData', 'player');
-                setBody();
+                if ( currentStates === STATES.RIGHT ) {
+                    currentStates = STATES.LEFT;
+                    player.body.clearShapes();
+                    player.body.loadPolygon('physicsLeftData', 'player');
+                    setBody();
+                }
             }
             else if ( game.input.keyboard.isDown( controls.right ) ) {
                 player.scale.x = 1;
-                player.body.clearShapes();
-                player.body.loadPolygon('physicsData', 'player');
                 player.body.moveRight( sideSpeed );
                 setBody()
+                if ( currentStates === STATES.LEFT ) {
+                    currentStates = STATES.RIGHT;
+                    player.body.clearShapes();
+                    player.body.loadPolygon('physicsData', 'player');
+                    setBody();
+                }
             }
 
             if ( game.input.keyboard.isDown( controls.jump ) && checkIfCanJump() && this.game.time.now > player.jumpTimer ) {

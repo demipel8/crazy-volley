@@ -13,6 +13,10 @@
       this.game.input.maxPointers = 1;
 
       if (this.game.device.desktop) {
+          document.getElementById( 'crazyvolley-game').setAttribute( 'style',
+              'height:' + window.innerHeight + 'px' );
+        this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.game.scale.pageAlignHorizontally = true;
         this.game.scale.pageAlignHorizontally = true;
       } else {
         this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
