@@ -22,6 +22,7 @@
             this.load.image( 'background', 'assets/images/background.jpg' );
             this.load.image( 'ball', 'assets/images/ball.png' );
             this.load.image( 'player', 'assets/images/player.png' );
+            this.load.image( 'powerUp', 'assets/images/powerUp.png' );
 
             this.load.audio( 'player0', [ 'assets/audio/player-0.mp3'] );
             this.load.audio( 'player1', [ 'assets/audio/player-1.mp3'] );
@@ -40,7 +41,7 @@
 
         update: function () {
             if (!!this.ready) {
-                this.game.state.start('menu');
+                this.game.state.start( 'game'/*'menu'*/);
             }
         },
 

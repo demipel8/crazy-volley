@@ -6,21 +6,32 @@ var Score;
 (function(  ) {
 
     Score = function ( game, x, y, initialValue ) {
-
-        var value = initialValue;
+        var tween;
+        var value = { score: initialValue };
         var score = Object.create( Phaser.BitmapText.prototype );
-        Phaser.BitmapText.call(score, game, x, y, '8bit', value + '%', 40, 'left', LAYERS.foreground );
+        Phaser.BitmapText.call(score, game, x, y, '8bit', value.score, 150, 'left', LAYERS.foreground );
 
         game.add.existing( score );
 
+        score.alpha = 0.7;
+
         score.setScore = function( newScore, x ) {
-            value = newScore;
             score.x = x;
-            score.setText( value + '%' );
+            tween = game.add.tween( value ).to( { score: newScore }, 200, 'Linear', true );
+            tween.onComplete.addOnce( function() {
+                update();
+                this.update = function() {}
+            }, score );
+            score.update = update;
         };
 
+        function update() {
+
+            score.setText( Math.round( value.score ) );
+        }
+
         score.getScore = function( ) {
-            return value;
+            return value.score;
         };
 
         return score;

@@ -3,12 +3,12 @@
  */
 var Team;
 
-(function(  ) {
+( function() {
 
-    var SCORE_PADDING = 10;
+    var SCORE_PADDING = 60;
     var PLAYER_PADDING = 50;
 
-    Team = function (game, x, width, config, material, collisionGroup, audio, initialScore ) {
+    Team = function (game, x, width, config, audio, initialScore ) {
 
         var team = game.add.graphics(0, 0, LAYERS.background );
 
@@ -17,8 +17,8 @@ var Team;
         team.drawTeamSpace = drawTeamSpace;
         team.destroy = destroy;
 
-        team.score = Score( game, x + SCORE_PADDING, 10, initialScore );
-        team.player = Player( game, x + PLAYER_PADDING, 430, 'player', config.controls, material, collisionGroup, audio);
+        team.score = Score( game, x + SCORE_PADDING, 80, initialScore );
+        team.player = Player( game, x + PLAYER_PADDING, 430, 'player', config.controls, audio);
 
         function drawTeamSpace(x, width) {
 
@@ -27,8 +27,8 @@ var Team;
             team.drawRect(x, 0, width, game.height);
             team.xPosition = x;
             team.widthOccupied = width;
-            team.score.setScore( Math.round( ( team.widthOccupied / game.width ) * 100 ), team.xPosition + SCORE_PADDING );
-
+            team.score.setScore( Math.round( ( team.widthOccupied / game.width ) * 100 ),
+                team.xPosition + team.widthOccupied / 2 - 100 );
         }
 
         function destroy() {
@@ -41,4 +41,4 @@ var Team;
 
         return team;
     };
-} (  ) );
+} () );

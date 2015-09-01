@@ -6,8 +6,8 @@
   "eqeqeq": true,
   "forin": true,
   "immed": true,
-  "latedef": true,
-  "newcap": true,
+  "latedef": false,
+  "newcap": false,
   "noarg": true,
   "nonew": false,
   "quotmark": "single",
@@ -19,6 +19,16 @@
   "sub": true,
   "debug": true,
   "globals": {
-    "Phaser": false
+    "Phaser": false,
+    "Team": true,
+    "CountDown": true,
+    "Player": true,
+    "Ball": true,
+    "PowerUp": true,
+    "endGame": true,
+    "Score": true,
+    "LAYERS": true,
+    "MATERIALS": true
+
   }
 }

@@ -6,7 +6,7 @@ var diameter = 26;
 
 (function(  ) {
 
-    Ball = function ( game, x, y, image, material ) {
+    Ball = function ( game, x, y, image ) {
 
         var ball = Object.create(Phaser.Sprite.prototype);
         Phaser.Sprite.call(ball, game, x, y, image, LAYERS.foreground);
@@ -15,7 +15,9 @@ var diameter = 26;
 
         game.physics.p2.enable( ball, false );
         ball.body.setCircle( diameter );
-        ball.body.setMaterial( material);
+        ball.body.setMaterial( MATERIALS.ball );
+        ball.body.setCollisionGroup( COLLISION_GROUPS.ball );
+        ball.body.collides( [ COLLISION_GROUPS.player, COLLISION_GROUPS.ball ] );
 
         ball.body.onBeginContact.add( collisionHandler, this );
         ball.events.onTouchGround = new Phaser.Signal();
@@ -25,7 +27,7 @@ var diameter = 26;
             if ( !body ) {
                 if( ball.y + diameter >= game.height ) {
                     ball.events.onTouchGround.dispatch( ball );
-                    ball.body.reset( game.width / 2,  100 )
+                    ball.body.reset( game.width / 2,  100 );
                 }
             } else {
                 body.sprite.audio.play();

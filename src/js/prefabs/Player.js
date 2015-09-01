@@ -5,12 +5,12 @@ var Player;
 
 (function(  ) {
 
-    var sideSpeed = 200;
+    var sideSpeed = 400;
     var jumpSpeed = 200;
     var yAxis = p2.vec2.fromValues(0, 1);
     var STATES = { LEFT: 0, RIGHT: 1 };
 
-    Player = function (game, x, y, image, controls, material, collisionGroup, audio ) {
+    Player = function (game, x, y, image, controls, audio ) {
 
         var player = Object.create(Phaser.Sprite.prototype);
         var currentStates = STATES.RIGHT;
@@ -23,10 +23,8 @@ var Player;
         player.body.clearShapes();
         player.body.loadPolygon('physicsData', 'player');
 
-        player.body.fixedRotation = true;
-        player.body.setMaterial( material );
-        player.body.collideWorldBounds = true;
-        player.body.mass = 4;
+        setBody();
+        player.body.collides( [ COLLISION_GROUPS.player, COLLISION_GROUPS.ball ] );
 
         player.jumpTimer = 0;
         player.audio = game.add.audio( audio );
@@ -49,7 +47,6 @@ var Player;
             else if ( game.input.keyboard.isDown( controls.right ) ) {
                 player.scale.x = 1;
                 player.body.moveRight( sideSpeed );
-                setBody()
                 if ( currentStates === STATES.LEFT ) {
                     currentStates = STATES.RIGHT;
                     player.body.clearShapes();
@@ -91,8 +88,8 @@ var Player;
 
         function setBody() {
             player.body.fixedRotation = true;
-            player.body.setCollisionGroup( collisionGroup );
-            player.body.setMaterial( material );
+            player.body.setCollisionGroup( COLLISION_GROUPS.player );
+            player.body.setMaterial( MATERIALS.player );
             player.body.collideWorldBounds = true;
             player.body.mass = 4;
         }

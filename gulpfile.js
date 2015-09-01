@@ -37,7 +37,7 @@ gulp.task('copy-vendor', ['clean'], function () {
     .on('error', gutil.log);
 });
 
-gulp.task('uglify', ['clean','lint'], function () {
+gulp.task('uglify', ['clean'/*,'lint'*/], function () {
   gulp.src(paths.js)
     .pipe(concat('main.min.js'))
     .pipe(gulp.dest(paths.dist))
@@ -60,7 +60,7 @@ gulp.task('processhtml', ['clean'], function() {
   gulp.src('src/index.html')
     .pipe(processhtml({}))
     .pipe(gulp.dest(paths.dist))
-    .on('error', gutil.log);
+    .on('error', gutil.log );
 });
 
 gulp.task('minifyhtml', ['clean'], function() {
@@ -70,11 +70,11 @@ gulp.task('minifyhtml', ['clean'], function() {
     .on('error', gutil.log);
 });
 
-gulp.task('lint', function() {
+gulp.task('lint', function( cb ) {
   gulp.src(paths.js)
     .pipe(jshint('.jshintrc'))
     .pipe(jshint.reporter('default'))
-    .on('error', gutil.log);
+    .on('error', gutil.log, cb);
 });
 
 gulp.task('html', function(){
