@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>crazyvolley</title>
+
+  <!-- build:css main.min.css -->
+  <link rel="stylesheet" href="css/main.css">
+  <!-- /build -->
+</head>
+
+<body>
+
+  <div id="crazyvolley-game" class="game"></div>
+
+  <!-- build:remove -->
+  <script src="http://localhost:35729/livereload.js"></script>
+  <!-- /build -->
+
+  <!-- build:js phaser.min.js-->
+  <script src="bower_components/phaser-official/build/phaser.min.js"></script>
+  <!-- /build -->
+
+  <!-- build:js main.min.js -->
+
+  <script src="js/prefabs/Player.js"></script>
+  <script src="js/prefabs/Ball.js"></script>
+  <script src="js/prefabs/Team.js"></script>
+  <script src="js/prefabs/Score.js"></script>
+
+  <script src="js/scenes/boot.js"></script>
+  <script src="js/scenes/preloader.js"></script>
+  <script src="js/scenes/menu.js"></script>
+  <script src="js/scenes/game.js"></script>
+  <script src="js/main.js"></script>
+  <!-- yo phaser:state new-state-files-put-here -->
+  <!-- /build -->
+
+</body>
+</html>
+
