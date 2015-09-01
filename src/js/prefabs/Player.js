@@ -49,7 +49,6 @@ var Player;
             else if ( game.input.keyboard.isDown( controls.right ) ) {
                 player.scale.x = 1;
                 player.body.moveRight( sideSpeed );
-                setBody()
                 if ( currentStates === STATES.LEFT ) {
                     currentStates = STATES.RIGHT;
                     player.body.clearShapes();

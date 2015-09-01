@@ -70,7 +70,7 @@ en las invocaciones de los prefabs*/
             ball.events.onTouchGround.add( this.ballTouchesGround , this );
             teams.push( team1, team2 );
 
-            var timer = CountDown( game, 315, 50, 3 );
+            var timer = CountDown( game, 265, 50, 3 );
             timer.start();
             timer.events.onCountDownEnds.add( function() { console.log( 'se acabo' ) } , this );
         },
