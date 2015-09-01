@@ -1,15 +1,15 @@
 /**
- * Created by demi on 8/20/15.
+ * Created by demi on 8/30/15.
  */
 var Score;
 
 (function(  ) {
 
-    Score = function ( game, x, y, initialValue ) { //TODO no va
+    Score = function ( game, x, y, initialValue ) {
 
         var value = initialValue;
-        var score = Object.create( Phaser.Text.prototype );
-        Phaser.Text.call(score, game, x, y, value + '%', { font: "40px Arial", fill: "#ffffff", align: "center" } );
+        var score = Object.create( Phaser.BitmapText.prototype );
+        Phaser.BitmapText.call(score, game, x, y, '8bit', value + '%', 40, 'left', LAYERS.foreground );
 
         game.add.existing( score );
 
@@ -22,6 +22,7 @@ var Score;
         score.getScore = function( ) {
             return value;
         };
+
         return score;
     };
 } (  ) );

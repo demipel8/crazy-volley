@@ -1,96 +1,95 @@
 /**
- * Created by demi on 8/18/15.
+ * Created by demi on 8/27/15.
  */
-
 var Player;
+var cursors;
+var jumpTimer = 0;
+var sideSpeed = 200;
+var jumpSpeed = 200;
+var yAxis = p2.vec2.fromValues(0, 1);
 
 (function(  ) {
-    var cursors;
-    var jumpButton;
-    var fireButton;
-    var jumpTimer = 0;
-    var sideSpeed = 200;
-    var jumpSpeed = 200;
-    var yAxis = p2.vec2.fromValues(0, 1);
 
-    Player = function (game, x, y, image, controls) {
-
-        cursors = game.input.keyboard.createCursorKeys();
-        jumpButton = cursors.up;
-        fireButton = game.input.keyboard.addKey( Phaser.Keyboard.SPACEBAR );
+    Player = function (game, x, y, image, controls, material, collisionGroup, audio ) {
 
         var player = Object.create(Phaser.Sprite.prototype);
+        Phaser.Sprite.call(player, game, x, y, image, LAYERS.foreground );
 
-        Phaser.Sprite.call(player, game, x, y, image);
-        //player.scale.setTo(1.1, 1.1);
-        player.anchor.setTo(.5, 1); //so it flips around its middle
-        //player.animations.add('move', [5, 6, 7, 8], 10, true);
-
+        player.anchor.setTo(.5, 1);
         game.add.existing(player);
-
 
         game.physics.p2.enable( player, true );
         player.body.clearShapes();
         player.body.loadPolygon('physicsData', 'player');
 
         player.body.fixedRotation = true;
+        player.body.setMaterial( material );
         player.body.collideWorldBounds = true;
         player.body.mass = 4;
 
-        player.material = game.physics.p2.createMaterial('playerMaterial');
-        player.body.setMaterial( player.material );
+        player.jumpTimer = 0;
+        player.audio = game.add.audio( audio );
+
 
         player.update = function () {
 
             player.body.velocity.x = 0; //default speed - stationary
 
             if ( game.input.keyboard.isDown( controls.left ) ) {
-                player.scale.x =  - Math.abs( player.scale.x );
+                player.scale.x = -1;
                 player.body.moveLeft( sideSpeed );
+                player.body.clearShapes();
+                player.body.loadPolygon('physicsLeftData', 'player');
+                setBody();
             }
             else if ( game.input.keyboard.isDown( controls.right ) ) {
-                player.scale.x = Math.abs( player.scale.x );
+                player.scale.x = 1;
+                player.body.clearShapes();
+                player.body.loadPolygon('physicsData', 'player');
                 player.body.moveRight( sideSpeed );
-            }
-            else {
-                player.frame = 5;
+                setBody()
             }
 
-            if ( game.input.keyboard.isDown( controls.jump ) && checkIfCanJump() && this.game.time.now > jumpTimer ) {
-                player.body.moveUp( jumpSpeed );
-                jumpTimer = this.game.time.now + 750;
+            if ( game.input.keyboard.isDown( controls.jump ) && checkIfCanJump() && this.game.time.now > player.jumpTimer ) {
+                player.body.moveUp( jumpSpeed ) ;
+                player.jumpTimer = this.game.time.now + 0;
             }
-
-            /*if ( fireButton.isDown ) {
-                player.weapon.fire( player );
-            }*/
         };
 
         function checkIfCanJump() {
 
-            var result = false;
+            var d;
+            var id = player.body.data.id;
 
             for ( var i=0; i < game.physics.p2.world.narrowphase.contactEquations.length; i++ ) {
                 var c = game.physics.p2.world.narrowphase.contactEquations[i];
 
-                if ( c.bodyA === player.body.data || c.bodyB === player.body.data ) {
-                    var d = p2.vec2.dot( c.normalA, yAxis );
+                if ( c.bodyA.id === id || c.bodyB.id === id ) {
+                    d = p2.vec2.dot( c.normalA, yAxis );
 
-                    if ( c.bodyA === player.body.data ) {
+                    if ( c.bodyA.id === id ) {
                         d *= -1;
                     }
 
                     if ( d > 0.5 ) {
-                        result = true;
+                        return true;
                     }
                 }
             }
 
-            return result;
+            return false;
 
         }
 
+        function setBody() {
+            player.body.fixedRotation = true;
+            player.body.setCollisionGroup( collisionGroup );
+            player.body.setMaterial( material );
+            player.body.collideWorldBounds = true;
+            player.body.mass = 4;
+        }
+
         return player;
+
     };
 } (  ) );
-

@@ -1,55 +1,36 @@
 /**
- * Created by demi on 8/18/15.
+ * Created by demi on 8/27/15.
  */
 var Ball;
 var diameter = 26;
 
 (function(  ) {
 
-    Ball = function ( game, x, y, image ) {
+    Ball = function ( game, x, y, image, material ) {
 
         var ball = Object.create(Phaser.Sprite.prototype);
-
-        Phaser.Sprite.call(ball, game, x, y, image);
-
+        Phaser.Sprite.call(ball, game, x, y, image, LAYERS.foreground);
+        ball.scale.set( 0.5 );
         game.add.existing(ball);
 
-        ball.scale.set( 0.5 );
-        game.physics.p2.enable( ball, true );
-
+        game.physics.p2.enable( ball, false );
         ball.body.setCircle( diameter );
-        ball.material = game.physics.p2.createMaterial('ballMaterial');
-        ball.body.setMaterial( ball.material );
+        ball.body.setMaterial( material);
 
         ball.body.onBeginContact.add( collisionHandler, this );
         ball.events.onTouchGround = new Phaser.Signal();
 
-        function collisionHandler( body, bodyB, shapeA, shapeB, equation) {
+        function collisionHandler( body ) {
 
-            //  The block hit something.
-            //
-            //  This callback is sent 5 arguments:
-            //
-            //  The Phaser.Physics.P2.Body it is in contact with. *This might be null* if the Body was created directly in the p2 world.
-            //  The p2.Body this Body is in contact with.
-            //  The Shape from this body that caused the contact.
-            //  The Shape from the contact body.
-            //  The Contact Equation data array.
-            //
-            //  The first argument may be null or not have a sprite property, such as when you hit the world bounds.
-
-            if ( body ) {
-            } else {
+            if ( !body ) {
                 if( ball.y + diameter >= game.height ) {
                     ball.events.onTouchGround.dispatch( ball );
                     ball.body.reset( game.width / 2,  100 )
                 }
+            } else {
+                body.sprite.audio.play();
             }
-
         }
-        ball.update = function () {
-
-        };
 
         return ball;
     };
