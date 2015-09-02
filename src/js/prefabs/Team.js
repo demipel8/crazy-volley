@@ -10,7 +10,7 @@ var Team;
 
     Team = function (game, x, width, config, audio, initialScore ) {
 
-        var team = game.add.graphics(0, 0, LAYERS.background );
+        var team = PhaserDelegate( Phaser.Graphics, game, [ 0, 0, LAYERS.background ] );
 
         team.color = config.color;
         team.alpha = 0.8;

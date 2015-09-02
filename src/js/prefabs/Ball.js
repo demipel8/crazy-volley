@@ -8,10 +8,8 @@ var diameter = 26;
 
     Ball = function ( game, x, y, image ) {
 
-        var ball = Object.create(Phaser.Sprite.prototype);
-        Phaser.Sprite.call(ball, game, x, y, image, LAYERS.foreground);
+        var ball = PhaserDelegate( Phaser.Sprite, game, [ x, y, image, LAYERS.foreground ] );
         ball.scale.set( 0.5 );
-        game.add.existing(ball);
 
         game.physics.p2.enable( ball, false );
         ball.body.setCircle( diameter );

@@ -8,10 +8,7 @@ var Score;
     Score = function ( game, x, y, initialValue ) {
         var tween;
         var value = { score: initialValue };
-        var score = Object.create( Phaser.BitmapText.prototype );
-        Phaser.BitmapText.call(score, game, x, y, '8bit', value.score, 150, 'left', LAYERS.foreground );
-
-        game.add.existing( score );
+        var score = PhaserDelegate( Phaser.BitmapText, game, [ x, y, '8bit', value.score, 150, 'left', LAYERS.foreground ] );
 
         score.alpha = 0.7;
 

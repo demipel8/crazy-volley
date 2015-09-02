@@ -12,12 +12,10 @@ var Player;
 
     Player = function (game, x, y, image, controls, audio ) {
 
-        var player = Object.create(Phaser.Sprite.prototype);
+        var player =  PhaserDelegate( Phaser.Sprite, game, [ x, y, image, LAYERS.foreground ] );
         var currentStates = STATES.RIGHT;
-        Phaser.Sprite.call(player, game, x, y, image, LAYERS.foreground );
 
         player.anchor.setTo(.5, 1);
-        game.add.existing(player);
 
         game.physics.p2.enable( player, true );
         player.body.clearShapes();

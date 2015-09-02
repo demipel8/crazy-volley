@@ -7,9 +7,7 @@ var PowerUp;
 
     PowerUp = function (game, x, y, image ) {
 
-        var powerUp = Object.create(Phaser.Sprite.prototype);
-        Phaser.Sprite.call(powerUp, game, x, y, image, LAYERS.foreground );
-        game.add.existing(powerUp);
+        var powerUp = PhaserDelegate( Phaser.Sprite, game, [ x, y, image, LAYERS.foreground ] );
 
         function launch() {
             var coords = {

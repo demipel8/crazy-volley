@@ -11,10 +11,8 @@ var CountDown;
         var timer = game.time.create( false );
 
 
-        var countDown = Object.create( Phaser.BitmapText.prototype );
-        Phaser.BitmapText.call(countDown, game, x, y, '8bit', formatTime( counter ), 40, 'center', LAYERS.foreground );
-
-        game.add.existing( countDown );
+        var countDown = PhaserDelegate( Phaser.BitmapText, game, [ x, y, '8bit', formatTime( counter ), 40, 'center',
+            LAYERS.foreground ] );
 
         countDown.start = function( ) {
             timer.loop( Phaser.Timer.SECOND, loop, this);
