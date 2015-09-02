@@ -17,7 +17,7 @@ the one used for crazy volley.
 
 ![alt text](https://raw.githubusercontent.com/demipel8/crazy-volley/develop/report/assets/phaser_projectCreation.png "")
 
-next you’ll notice yeoman launching *npm install* and *bower install* command for us, leaving
+Next you’ll notice yeoman launching *npm install* and *bower install* command for us, leaving
 this way the project ready to code, except a few changes.
 
 
@@ -431,22 +431,6 @@ var player2 = Player( game, 300, 430, 'player', {
 ```
 
 ```javascript
-var player1 = Player( game, 100, 430, 'player', { 
-		left: Phaser.Keyboard.A, 
-		right: Phaser.Keyboard.D,
-		jump: Phaser.Keyboard.W
-	}, 
-	materials.player );
-	
-var player2 = Player( game, 300, 430, 'player', { 
-        left: Phaser.Keyboard.LEFT, 
-        right: Phaser.Keyboard.RIGHT,
-        jump: Phaser.Keyboard.UP
-    }, 
-    materials.player );
-```
-
-```javascript
 if ( game.input.keyboard.isDown( controls.jump ) && checkIfCanJump() && this.game.time.now > player.jumpTimer ) {
 	player.body.moveUp( jumpSpeed ) ;
 	player.jumpTimer = this.game.time.now + 750;
@@ -476,9 +460,7 @@ function checkIfCanJump() {
 			}
 		}
 	}
-
 	return false;
-
 }
 ```
 
