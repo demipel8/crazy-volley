@@ -1,9 +1,8 @@
 #Chapter 4
 ##Solution design
 ###4.1 Implementation
-####4.1.1Implementation
+####4.1.1 Creating our basic structure
 
-Creating our basic structure
 We’ll start by creating the root folder for our project, in our case creating a new project
 on WebStorm will create the folder on the following path /home/demi/WebstormProject-
 s/crazyvolley. Open a console, enter the folder and launch yeoman Phaser generator.
@@ -33,13 +32,13 @@ store our custom object definitions.
 After moving the states to our folder states, the index.html fill needs to be updated with
 the new file paths.
 
-```javascript
-< script src = " js / states / boot . js " > </ script >
-< script src = " js / states / preloader . js " > </ script >
-< script src = " js / states / menu . js " > </ script >
-< script src = " js / states / game . js " > </ script >
-< script src = " js / main . js " > </ script >
+```html
+<script src = "js/states/boot.js"> </script>
+<script src = "js/states/preloader.js"> </script>
+<script src = "js/states/menu.js"> </script>
+<script src = "js/states/game.js"> </script>
+<script src = "js/main.js"> </script>
 ```
 
-with this steps everything is ready to finally start coding.
+With this steps everything is ready to finally start coding.
 
