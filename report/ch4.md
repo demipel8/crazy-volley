@@ -16,7 +16,7 @@ Phaser generator will launch and ask as for the game name, by default it uses th
 name so let’s leave it that way. We’ll also specify the default choice for physics, as P2 is
 the one used for crazy volley.
 
-![alt text](https://github.com/demipel8/crazy-volley/tree/develop/report/assets/phaser_projectCreation.png "")
+![alt text](https://raw.githubusercontent.com/demipel8/crazy-volley/develop/report/assets/phaser_projectCreation.png "")
 
 next you’ll notice yeoman launching npm install and bower install command for us, leaving
 this way the project ready to code, except a few changes.
