@@ -11,8 +11,8 @@ For a tutorial on the implementation of the game: [Tutorial](https://github.com/
 
 For the full report:
 
-    1. [State of art](https://github.com/demipel8/crazy-volley/blob/develop/report/ch2.md)
-    2. [Problem analysis](https://github.com/demipel8/crazy-volley/blob/develop/report/ch3.md)
-    3. [Solution design](https://github.com/demipel8/crazy-volley/blob/develop/report/ch4.md)
+1. [State of art](https://github.com/demipel8/crazy-volley/blob/develop/report/ch2.md)
+2. [Problem analysis](https://github.com/demipel8/crazy-volley/blob/develop/report/ch3.md)
+3. [Solution design](https://github.com/demipel8/crazy-volley/blob/develop/report/ch4.md)
 
 Thanks for entering. Hope you enjoy the game and the info.
